@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#f6f3ed">
+  <meta name="description" content="A gentle routine and memory companion prototype for people living with memory loss.">
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="styles.css">
+  <title>Remi — Gentle Companion</title>
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand-mark" aria-hidden="true">r</div>
+        <div><div class="brand-name">remi</div><div class="brand-sub">your gentle companion</div></div>
+      </div>
+      <button class="icon-button" id="settingsOpen" aria-label="Open settings" title="Settings">⚙</button>
+    </header>
+
+    <main>
+      <section class="welcome panel">
+        <div class="eyebrow" id="todayLabel">A LITTLE AT A TIME</div>
+        <h1 id="greeting">Hello, there <span>♡</span></h1>
+        <p id="welcomeLine">You’re safe to take today one step at a time.</p>
+        <div class="welcome-bottom">
+          <div class="weather-dot" aria-hidden="true">☀</div>
+          <div><strong id="dateLine">Today</strong><small>There is no rush.</small></div>
+          <button class="soft-button" id="calmButton">Help me feel calm</button>
+        </div>
+      </section>
+
+      <nav class="tabs" aria-label="Main sections">
+        <button class="tab active" data-view="today">Today</button>
+        <button class="tab" data-view="memories">My memories</button>
+        <button class="tab" data-view="support">Support</button>
+        <button class="tab" data-view="care">Care team</button>
+      </nav>
+
+      <section class="view active" id="view-today">
+        <div class="section-heading"><div><div class="eyebrow">YOUR DAY</div><h2>Little things to do</h2></div><span class="progress-pill" id="progressPill">0 of 0</span></div>
+        <div class="routine-list" id="routineList"></div>
+        <button class="outline-button full" id="addRoutine">＋ Add a reminder</button>
+
+        <div class="section-heading mood-heading"><div><div class="eyebrow">CHECKING IN</div><h2>How are you feeling?</h2></div></div>
+        <div class="mood-grid">
+          <button class="mood" data-mood="Lovely"><span>😊</span><b>Lovely</b></button>
+          <button class="mood" data-mood="Okay"><span>🙂</span><b>Okay</b></button>
+          <button class="mood" data-mood="Worried"><span>😟</span><b>Worried</b></button>
+          <button class="mood" data-mood="Sad"><span>💙</span><b>Sad</b></button>
+        </div>
+        <p class="quiet-note" id="moodResponse" aria-live="polite">Any feeling is okay. You can tell someone you trust if you need to.</p>
+
+        <div class="panel voice-panel">
+          <div class="voice-icon">♫</div><div class="voice-copy"><h3>A gentle moment</h3><p id="voiceText">You are not alone. We can take one small step together.</p></div>
+          <button class="round-play" id="speakButton" aria-label="Read this message aloud">▶</button>
+        </div>
+      </section>
+
+      <section class="view" id="view-memories" hidden>
+        <div class="section-heading"><div><div class="eyebrow">MY STORY</div><h2>People & memories</h2></div></div>
+        <div class="memory-intro panel"><div class="memory-sun">✿</div><p>Your memories are yours. Explore them whenever you feel like it.</p></div>
+        <div id="memoryList" class="memory-list"></div>
+        <button class="outline-button full" id="addMemory">＋ Add a person or memory</button>
+      </section>
+
+      <section class="view" id="view-support" hidden>
+        <div class="section-heading"><div><div class="eyebrow">HERE TO HELP</div><h2>Feel safe and supported</h2></div></div>
+        <div class="support-card panel"><div class="support-symbol">⌂</div><h3>Find my way</h3><p>Use your device’s location to see where you are. This demo does not track you in the background or alert a care team.</p><button class="primary-button" id="locationButton">Show my location</button><div id="locationResult" class="result-box" aria-live="polite">Location is off until you choose to share it.</div></div>
+        <div class="support-card panel"><div class="support-symbol">♡</div><h3>People who care for me</h3><p>Add a trusted person’s details so they are easy to find on this device.</p><div id="trustedList"></div><button class="outline-button full" id="addTrusted">＋ Add trusted person</button></div>
+        <div class="support-card panel"><div class="support-symbol">☏</div><h3>Need help right now?</h3><p>If you feel lost or unsafe, stay somewhere safe and contact your trusted person or local emergency services.</p><button class="outline-button full" id="emergencyInfo">Show help reminder</button><div id="emergencyResult" class="result-box" hidden>Pause somewhere safe. Ask a nearby trusted person for help. If there is immediate danger, contact local emergency services.</div></div>
+        <div class="privacy-note"><strong>Your privacy matters.</strong> This prototype stores entries in this browser on this device. It does not send data to doctors, provide secure medical records, verify identity, or guarantee emergency assistance.</div>
+      </section>
+
+      <section class="view" id="view-care" hidden>
+        <div class="section-heading"><div><div class="eyebrow">CONNECTED CARE · DEMO</div><h2>Care team dashboard</h2></div><span class="progress-pill" id="connectionPill">Local demo</span></div>
+        <div class="panel care-banner"><div class="support-symbol">♡</div><div><h3>Care, with dignity</h3><p>This demo dashboard shows check-ins and events saved on this device. It does not send anything to a real doctor or caregiver.</p></div></div>
+        <div class="care-stats">
+          <div class="panel care-stat"><span>Today's check-ins</span><strong id="moodCount">0</strong></div>
+          <div class="panel care-stat"><span>Open reminders</span><strong id="openRoutineCount">0</strong></div>
+          <div class="panel care-stat"><span>Demo events</span><strong id="alertCount">0</strong></div>
+        </div>
+        <div class="panel care-panel">
+          <div class="section-heading"><div><div class="eyebrow">PATIENT PROFILE</div><h3>Local demo profile</h3></div></div>
+          <label>Patient display name<input id="carePatientName" maxlength="50" placeholder="Demo patient"></label>
+          <label>Demo patient code<input id="carePatientCode" maxlength="30" placeholder="DEMO-001"></label>
+          <label>Dashboard mode<select id="careRole"><option value="patient">Patient view</option><option value="caregiver">Caregiver demo view</option></select></label>
+          <button class="primary-button full" id="saveCareProfile">Save demo profile</button>
+          <p class="quiet-note">The role selector is only a demonstration switch, not a secure login or permission system.</p>
+        </div>
+        <div class="panel care-panel">
+          <div class="section-heading"><div><div class="eyebrow">RECENT CHECK-INS</div><h3>Mood notes</h3></div></div>
+          <div id="careMoodList" class="care-feed"></div>
+        </div>
+        <div class="panel care-panel">
+          <div class="section-heading"><div><div class="eyebrow">ACTIVITY</div><h3>Care notes & events</h3></div></div>
+          <form id="careNoteForm"><label>Add a note for this demo<input id="careNoteInput" maxlength="180" placeholder="e.g. Family called this afternoon"></label><button class="outline-button full" type="submit">＋ Add demo note</button></form>
+          <div id="careNoteList" class="care-feed"></div>
+          <button class="outline-button full" id="exportData">Export local demo data (JSON)</button>
+        </div>
+        <div class="privacy-note"><strong>Not a clinical monitoring service.</strong> This dashboard is local-only. Real remote access requires a secure backend, authenticated accounts, consent and access controls, encrypted transmission/storage, audit logs, and tested alert delivery.</div>
+      </section>
+      </main>
+    <footer>Made with care, one moment at a time <span>♡</span><small>Prototype · Not a medical device</small></footer>
+  </div>
+
+  <dialog id="itemDialog">
+    <form method="dialog" id="itemForm">
+      <div class="dialog-top"><div><div class="eyebrow" id="dialogEyebrow">A LITTLE REMINDER</div><h2 id="dialogTitle">Add a reminder</h2></div><button class="icon-button close-dialog" aria-label="Close">×</button></div>
+      <div id="routineFields">
+        <label>What would you like to remember?<input id="routineName" maxlength="70" placeholder="e.g. Have a glass of water" required></label>
+        <label>Time (optional)<input id="routineTime" type="time"></label>
+        <label>Gentle note (optional)<input id="routineNote" maxlength="120" placeholder="e.g. Your blue cup is in the kitchen"></label>
+      </div>
+      <div id="memoryFields" hidden>
+        <label>Name or memory title<input id="memoryName" maxlength="70" placeholder="e.g. My daughter, Maya" required></label>
+        <label>Who or what is this memory about?<select id="memoryType"><option>Someone I love</option><option>A favourite place</option><option>My life story</option><option>Something I enjoy</option></select></label>
+        <label>A kind reminder or detail<textarea id="memoryNote" maxlength="300" rows="3" placeholder="e.g. Maya is my daughter. She loves gardening."></textarea></label>
+      </div>
+      <div id="trustedFields" hidden>
+        <label>Trusted person’s name<input id="trustedName" maxlength="70" placeholder="e.g. Sam" required></label>
+        <label>Phone number (optional)<input id="trustedPhone" type="tel" maxlength="35" placeholder="Phone number"></label>
+        <label>Relationship (optional)<input id="trustedRelation" maxlength="50" placeholder="e.g. Daughter, nurse"></label>
+      </div>
+      <button class="primary-button full" type="submit" id="saveItem">Save gently</button>
+    </form>
+  </dialog>
+
+  <dialog id="settingsDialog">
+    <form method="dialog" id="settingsForm">
+      <div class="dialog-top"><div><div class="eyebrow">MAKE IT YOURS</div><h2>My settings</h2></div><button class="icon-button close-dialog" aria-label="Close">×</button></div>
+      <label>What should we call you?<input id="userName" maxlength="35" placeholder="Your first name"></label>
+      <label>Reminder voice<select id="voicePreference"><option value="browser">Use device voice, if available</option><option value="silent">Keep messages silent</option></select></label>
+      <p class="quiet-note">A real-person voice recording, background monitoring, eye scanning, and necklace tracking are not included in this prototype.</p>
+      <button class="primary-button full" type="submit">Save settings</button>
+      <button class="text-button full" type="button" id="clearData">Clear all local app data</button>
+    </form>
+  </dialog>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="app.js"></script>
+</body>
+</html>

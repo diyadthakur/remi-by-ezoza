@@ -1,0 +1,19 @@
+{
+  "name": "Remi \u2014 Gentle Companion",
+  "short_name": "Remi",
+  "description": "A gentle routine and memory companion prototype.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#f6f3ed",
+  "theme_color": "#f6f3ed",
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
